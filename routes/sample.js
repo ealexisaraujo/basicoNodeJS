@@ -1,5 +1,7 @@
 const express = require('express');
 
+const response = require('../utils/network/index');
+
 function sample(app) {
   const router = express.Router();
   app.use('/sample', router);
@@ -8,19 +10,28 @@ function sample(app) {
     res.header({
       'custom-header': 'as custom as',
     });
-    res.send('GET request to the homepage');
+    response.success(req, res, 'Lista de mensajes');
   });
+
   router.post('/', function(req, res) {
     res.send('POST request to the homepage');
+    response.success(req, res, 'Lista de mensajes');
   });
+
   router.delete('/', function(req, res) {
     res.send(`Delete request ${req.body.text}`);
   });
+
   router.post('/post', function(req, res) {
-    res.status(201).send({
-      error: '',
-      body: 'Creado',
-    });
+    if (req.query.error == 'ok') {
+      response.error(req, res, 'Error simulado', 400);
+    } else {
+      response.success(req, res, 'Creado correctamente', 201);
+    }
+    // res.status(201).send({
+    //   error: '',
+    //   body: 'Creado',
+    // });
   });
 }
 
