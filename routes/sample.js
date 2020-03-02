@@ -5,6 +5,9 @@ function sample(app) {
   app.use('/sample', router);
 
   router.get('/', (req, res) => {
+    res.header({
+      'custom-header': 'as custom as',
+    });
     res.send('GET request to the homepage');
   });
   router.post('/', function(req, res) {
