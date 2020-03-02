@@ -8,7 +8,6 @@ const sample = require('./routes/sample');
 //body parser
 app.use(express.json());
 app.use(helmet());
-
 sample(app);
 
 app.listen(config.port, function() {

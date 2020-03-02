@@ -13,16 +13,16 @@ function sample(app) {
     response.success(req, res, 'Lista de mensajes');
   });
 
-  router.post('/', function(req, res) {
+  router.post('/', (req, res) => {
     res.send('POST request to the homepage');
     response.success(req, res, 'Lista de mensajes');
   });
 
-  router.delete('/', function(req, res) {
+  router.delete('/', (req, res) => {
     res.send(`Delete request ${req.body.text}`);
   });
 
-  router.post('/post', function(req, res) {
+  router.post('/post', (req, res) => {
     if (req.query.error == 'ok') {
       response.error(req, res, 'Error simulado', 400);
     } else {
