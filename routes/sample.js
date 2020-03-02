@@ -8,7 +8,7 @@ function sample(app) {
 
   router.get('/', (req, res) => {
     res.header({
-      'custom-header': 'as custom as',
+      'custom-header': 'as custom as'
     });
     response.success(req, res, 'Lista de mensajes');
   });
@@ -24,7 +24,7 @@ function sample(app) {
 
   router.post('/post', (req, res) => {
     if (req.query.error == 'ok') {
-      response.error(req, res, 'Error simulado', 400);
+      response.error(req, res, 'Error simulado', 500, 'Simulacion de errores');
     } else {
       response.success(req, res, 'Creado correctamente', 201);
     }
