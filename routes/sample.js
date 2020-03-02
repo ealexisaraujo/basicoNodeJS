@@ -14,9 +14,13 @@ function sample(app) {
     res.send('POST request to the homepage');
   });
   router.delete('/', function(req, res) {
-    console.log(req.body);
-    console.log(req.query);
-    res.send('Delete request to the homepage');
+    res.send(`Delete request ${req.body.text}`);
+  });
+  router.post('/post', function(req, res) {
+    res.status(201).send({
+      error: '',
+      body: 'Creado',
+    });
   });
 }
 
