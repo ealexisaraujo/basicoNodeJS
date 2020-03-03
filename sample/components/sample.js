@@ -1,14 +1,24 @@
 const express = require('express');
 
-const response = require('../../utils/network/index');
+const response = require('../../utils/network/reponse');
+
+const controller = require('./controller');
 
 const router = express.Router();
 
-router.get('/', (req, res) => {
-  res.header({
-    'custom-header': 'as custom as'
-  });
-  response.success(req, res, 'Lista de mensajes');
+router.get('/', async (req, res) => {
+  try {
+    const messageList = await controller.getMessages();
+    response.success(req, res, messageList, 200);
+  } catch (error) {
+    response.error(
+      req,
+      res,
+      'Unexpected Error',
+      500,
+      'Error en el controlador'
+    );
+  }
 });
 
 router.post('/', (req, res) => {
@@ -20,16 +30,25 @@ router.delete('/', (req, res) => {
   res.send(`Delete request ${req.body.text}`);
 });
 
-router.post('/post', (req, res) => {
-  if (req.query.error == 'ok') {
-    response.error(req, res, 'Error simulado', 500, 'Simulacion de errores');
-  } else {
-    response.success(req, res, 'Creado correctamente', 201);
+router.post('/post', async (req, res) => {
+  const { user, message } = req.body;
+  try {
+    const fullMessage = await controller.addMessagge(user, message);
+    response.success(req, res, fullMessage, 201);
+  } catch (error) {
+    response.error(
+      req,
+      res,
+      'Informacion Invalida',
+      400,
+      'Error en el controlador'
+    );
   }
-  // res.status(201).send({
-  //   error: '',
-  //   body: 'Creado',
-  // });
 });
+
+// res.status(201).send({
+//   error: '',
+//   body: 'Creado',
+// });
 
 module.exports = router;
