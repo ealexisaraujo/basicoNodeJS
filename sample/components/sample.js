@@ -46,6 +46,17 @@ router.post('/post', async (req, res) => {
   }
 });
 
+router.patch('/:id', async (req, res) => {
+  const { message } = req.body;
+  const { id } = req.params;
+  try {
+    const updateMessage = await controller.updateMessage(id, message);
+    response.success(req, res, updateMessage, 200);
+  } catch (error) {
+    response.error(req, res, 'Error interno', 500, 'Error en el controlador');
+  }
+});
+
 // res.status(201).send({
 //   error: '',
 //   body: 'Creado',
