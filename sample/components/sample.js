@@ -58,6 +58,16 @@ router.patch('/:id', async (req, res) => {
   }
 });
 
+router.delete('/:id', async (req, res) => {
+  const { id } = req.params;
+  try {
+    const deleteMessage = await controller.deleteMessage(id);
+    response.success(req, res, `Usuario ${id} eliminado`, deleteMessage, 200);
+  } catch (error) {
+    response.error(req, res, 'Error interno', 500, 'Error en el controlador');
+  }
+});
+
 // res.status(201).send({
 //   error: '',
 //   body: 'Creado',

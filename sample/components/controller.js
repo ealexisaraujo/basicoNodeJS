@@ -23,6 +23,16 @@ function getMessages(filterUser) {
   });
 }
 
+function deleteMessage(id) {
+  return new Promise((resolve, reject) => {
+    if (!id) {
+      return reject('Invalid Data');
+    }
+    store.remove(id);
+    resolve();
+  });
+}
+
 function updateMessage(id, message) {
   return new Promise((resolve, reject) => {
     console.log(id, message);
@@ -37,5 +47,6 @@ function updateMessage(id, message) {
 module.exports = {
   addMessagge,
   getMessages,
-  updateMessage
+  updateMessage,
+  deleteMessage
 };
