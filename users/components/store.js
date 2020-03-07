@@ -5,6 +5,18 @@ const addUser = async user => {
   addUser.save();
 };
 
+const getUsers = async filterUser => {
+  let filter = {};
+  if (filterUser !== null) {
+    filter = {
+      name: new RegExp(filterUser, 'i')
+    };
+  }
+  const users = await model.find(filter);
+  return users;
+};
+
 module.exports = {
-  add: addUser
+  add: addUser,
+  list: getUsers
 };

@@ -6,6 +6,22 @@ const controller = require('./controller');
 
 const router = express.Router();
 
+router.get('/', async (req, res) => {
+  const filterMessages = req.query.name || null;
+  try {
+    const userList = await controller.getUsers(filterMessages);
+    response.success(req, res, userList, 200);
+  } catch (error) {
+    response.error(
+      req,
+      res,
+      'Unexpected Error',
+      500,
+      'Error en el controlador'
+    );
+  }
+});
+
 router.post('/post', async (req, res) => {
   const { name } = req.body;
   try {

@@ -14,6 +14,14 @@ function addUser(name) {
   });
 }
 
+function getUsers(filterUser) {
+  // eslint-disable-next-line no-unused-vars
+  return new Promise((resolve, reject) => {
+    resolve(store.list(filterUser));
+  });
+}
+
 module.exports = {
-  addUser
+  addUser,
+  getUsers
 };
