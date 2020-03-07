@@ -7,8 +7,9 @@ const controller = require('./controller');
 const router = express.Router();
 
 router.get('/', async (req, res) => {
+  const filterMessages = req.query.user || null;
   try {
-    const messageList = await controller.getMessages();
+    const messageList = await controller.getMessages(filterMessages);
     response.success(req, res, messageList, 200);
   } catch (error) {
     response.error(

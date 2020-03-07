@@ -16,10 +16,10 @@ function addMessagge(user, message) {
   });
 }
 
-function getMessages() {
+function getMessages(filterUser) {
   // eslint-disable-next-line no-unused-vars
   return new Promise((resolve, reject) => {
-    resolve(store.list());
+    resolve(store.list(filterUser));
   });
 }
 

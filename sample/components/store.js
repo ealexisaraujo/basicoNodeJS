@@ -23,8 +23,14 @@ const addMessage = async message => {
   myMessage.save();
 };
 
-const getMessages = async () => {
-  const messages = await model.find();
+const getMessages = async filterUser => {
+  let filter = {};
+  if (filterUser !== null) {
+    filter = {
+      user: new RegExp(filterUser, 'i')
+    };
+  }
+  const messages = await model.find(filter);
   return messages;
 };
 
