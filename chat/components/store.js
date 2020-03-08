@@ -5,10 +5,16 @@ const addChat = async chat => {
   myChat.save();
 };
 
-const getChats = async () => {
+const getChats = async userId => {
+  let filter = {};
+  if (userId) {
+    filter = {
+      users: userId
+    };
+  }
   try {
     const chats = await model
-      .find()
+      .find(filter)
       .populate('users')
       .exec();
     return chats;

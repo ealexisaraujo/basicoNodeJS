@@ -2,7 +2,7 @@ const store = require('./store');
 
 function addChat(users) {
   return new Promise((resolve, reject) => {
-    if (!users) {
+    if (!users || !Array.isArray(users)) {
       console.log('[ChatController] No hay usuario o mensaje');
       return reject('Los datos son incorrectos');
     }
@@ -14,10 +14,10 @@ function addChat(users) {
   });
 }
 
-function getChats() {
+function getChats(userId) {
   // eslint-disable-next-line no-unused-vars
   return new Promise((resolve, reject) => {
-    resolve(store.list());
+    resolve(store.list(userId));
   });
 }
 

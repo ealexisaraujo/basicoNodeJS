@@ -6,9 +6,10 @@ const controller = require('./controller');
 
 const router = express.Router();
 
-router.get('/', async (req, res) => {
+router.get('/:userId', async (req, res) => {
+  const { userId } = req.params.userId;
   try {
-    const chatList = await controller.getChats();
+    const chatList = await controller.getChats(userId);
     response.success(req, res, chatList, 200);
   } catch (error) {
     response.error(

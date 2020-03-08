@@ -5,17 +5,23 @@ const addMessage = async message => {
   myMessage.save();
 };
 
-const getMessages = async filterUser => {
-  let filter = {};
-  if (filterUser !== null) {
-    filter = {
-      user: new RegExp(filterUser, 'i')
+const getMessages = async filterChatId => {
+  let filterChat = {};
+  if (filterChatId !== null) {
+    filterChat = {
+      chat: filterChatId
     };
   }
   try {
     const messages = await model
-      .find(filter)
+      .find(filterChat)
       .populate('user')
+      .populate({
+        path: 'chat',
+        populate: {
+          path: 'users'
+        }
+      })
       .exec();
     return messages;
   } catch (error) {

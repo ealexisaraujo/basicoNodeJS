@@ -1,4 +1,6 @@
 const express = require('express');
+const multer = require('multer');
+const path = require('path');
 
 const response = require('../../utils/network/reponse');
 
@@ -6,10 +8,24 @@ const controller = require('./controller');
 
 const router = express.Router();
 
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, `public/files/`);
+  },
+  filename: function(req, file, cb) {
+    cb(
+      null,
+      file.fieldname + '-' + Date.now() + path.extname(file.originalname)
+    );
+  }
+});
+
+const upload = multer({ storage });
 router.get('/', async (req, res) => {
-  const filterMessages = req.query.user || null;
+  // const filterMessages = req.query.user || null;
+  const filterChat = req.query.chat || null;
   try {
-    const messageList = await controller.getMessages(filterMessages);
+    const messageList = await controller.getMessages(filterChat);
     response.success(req, res, messageList, 200);
   } catch (error) {
     response.error(
@@ -31,10 +47,16 @@ router.delete('/', (req, res) => {
   res.send(`Delete request ${req.body.text}`);
 });
 
-router.post('/post', async (req, res) => {
-  const { user, message } = req.body;
+router.post('/post', upload.single('file'), async (req, res) => {
+  const { chat, user, message } = req.body;
+
   try {
-    const fullMessage = await controller.addMessagge(user, message);
+    const fullMessage = await controller.addMessagge(
+      chat,
+      user,
+      message,
+      req.file
+    );
     response.success(req, res, fullMessage, 201);
   } catch (error) {
     response.error(

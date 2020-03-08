@@ -10,6 +10,7 @@ db();
 //body parser
 app.use(express.json());
 app.use(helmet());
+app.use(config.publicRoute, express.static('public'));
 router(app);
 
 app.listen(config.port, function() {
