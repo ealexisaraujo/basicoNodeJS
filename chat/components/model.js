@@ -3,9 +3,14 @@ const mongoose = require('mongoose');
 const schema = mongoose.Schema;
 
 const mySchema = new schema({
-  name: String
+  users: [
+    {
+      type: schema.Types.ObjectId,
+      ref: 'user'
+    }
+  ]
 });
 
-const model = mongoose.model('user', mySchema);
+const model = mongoose.model('chat', mySchema);
 
 module.exports = model;

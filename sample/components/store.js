@@ -12,8 +12,15 @@ const getMessages = async filterUser => {
       user: new RegExp(filterUser, 'i')
     };
   }
-  const messages = await model.find(filter);
-  return messages;
+  try {
+    const messages = await model
+      .find(filter)
+      .populate('user')
+      .exec();
+    return messages;
+  } catch (error) {
+    console.log(error.message);
+  }
 };
 
 const updateText = async (id, message) => {
